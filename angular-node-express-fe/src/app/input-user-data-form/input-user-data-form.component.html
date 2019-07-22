@@ -1,5 +1,5 @@
 
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="input-form">
 
     <div class="form-group" [ngClass]="{ 'has-error': invalidFirstName() }"> <!-- First Name -->
       <label for="first_name" class="control-label">First Name</label>

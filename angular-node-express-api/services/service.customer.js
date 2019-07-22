@@ -51,20 +51,20 @@ class CustomerService {
         }
     }
 
-    static update(uid, data) {
-        if (customers[uid] !== null) {
-            const customer = customers[uid];
+    static update(guid, data) {
+        if (customers.c0['guid'] !== null) {
+            const customer = customers.c0['guid'];
             Object.assign(customer, data);
         } else {
-            throw new Error('Unable to retrieve a customer by (uid:' + uid + ')');
+            throw new Error('Unable to retrieve a customer by (uid:' + guid + ')');
         }
     }
     
-    static delete(uid) {
-        if (customers[uid] !== null) {
-            delete customers[uid];
+    static delete(guid) {
+        if (customers.c0['guid'] !== null) {
+            delete customers.c0['guid'];
         } else {
-            throw new Error('Unable to retrieve a customer by (uid:' + uid + ')');
+            throw new Error('Unable to retrieve a customer by (uid:' + guid + ')');
         }
     }
 }

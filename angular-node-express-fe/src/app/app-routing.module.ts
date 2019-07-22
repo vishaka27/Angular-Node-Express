@@ -6,7 +6,7 @@ import { DisplayUserDataComponent } from './display-user-data/display-user-data.
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'user/create',
     component: InputUserDataFormComponent
   },
   {
