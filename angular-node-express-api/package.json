@@ -11,6 +11,7 @@
     "express": "~4.13.1",
     "fast-validator": "^1.0.3",
     "fastest-validator": "^0.6.17",
+    "mysql": "^2.17.1",
     "uid-safe": "^2.1.5"
   }
 }

@@ -9,13 +9,15 @@ import { AppComponent } from './app.component';
 import { InputUserDataFormComponent } from './input-user-data-form/input-user-data-form.component';
 import { DisplayUserDataComponent } from './display-user-data/display-user-data.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { ViewCustomerInfoComponent } from './view-customer-info/view-customer-info.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     InputUserDataFormComponent,
     DisplayUserDataComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    ViewCustomerInfoComponent
   ],
   imports: [
     BrowserModule,
