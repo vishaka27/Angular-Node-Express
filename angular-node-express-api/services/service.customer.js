@@ -43,11 +43,11 @@ class CustomerService {
         return customer;
     }
 
-    static retrieve(guid) {
-        if (customers.c0['guid'] !== null) {
-            return customers.c0;
+    static retrieve(uid) {
+        if (customers[uid] !== null) {
+            return customers[uid];
         } else {
-            throw new Error('Unable to retrieve a customer by (uid:' + guid + ')');
+            throw new Error('Unable to retrieve a customer by (uid:' + uid + ')');
         }
     }
 
@@ -65,6 +65,16 @@ class CustomerService {
             delete customers.c0['guid'];
         } else {
             throw new Error('Unable to retrieve a customer by (uid:' + guid + ')');
+        }
+    }
+
+    static getByName(first_name) {
+        for (var key in customers) {
+            if ((customers[key] !== null) && (customers[key].first_name !== null)) {
+                return customers[key];
+            } else {
+                throw new Error('No data found for customer' + first_name);
+            }
         }
     }
 }

@@ -6,8 +6,19 @@
     <div class="row button-row">
       <button type="button" class="btn btn-primary col-lg-3 col-mg-3 col-sm-3" (click)="navigate('user/create')">Create</button>
       <button type="button" class="btn btn-warning col-lg-3 col-mg-3 col-sm-3">Update</button>
-      <button type="button" class="btn btn-info col-lg-3 col-mg-3 col-sm-3" (click)="navigate('user/:uid')">View</button>
+      <button type="button" class="btn btn-info col-lg-3 col-mg-3 col-sm-3" (click)="enterCustomerName()">View</button>
       <button type="button" class="btn btn-danger col-lg-3 col-mg-3 col-sm-3">Delete</button>
     </div>
+  </div>
+  <div *ngIf="showInputName" class="input-customer-name-wrapper">
+    <h3>Enter Customer name you want to search</h3>
+    <form class="input-form" [formGroup]="userName" (ngSubmit)="onSubmit()">
+      <div class="form-group" [ngClass]="{ 'has-error': invalidName() }">
+          <label for="name" class="control-label customer-name-label">Name</label>
+          <input type="text" formControlName="first_name" placeholder="Customer name" id="name" name="name" />
+          <p *ngIf="invalidName()" id="first_name_error" class="help-block">Invalid name.</p>
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
   </div>
 </div>
