@@ -43,8 +43,10 @@ router.get('/:id', async function(req, res, next) {
 router.get('/name/:first_name', async function(req, res, next) {
     // console.log('first name selection');
     try {
-        const customer = await CustomerService.getByName(req.params.first_name);
-        return res.json({customer: customer});
+        const customer = await CustomerService.getByName(req.params.first_name, callback);
+        function callback(data) {
+            res.status(200).json({customer: data});
+        }
     } catch(err) {
         return res.status(404).json({error: err.message});
     }

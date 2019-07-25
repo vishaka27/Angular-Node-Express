@@ -1,4 +1,18 @@
-<p>
-  view-customer-info works!
-</p>
-<div>{{userName}}</div>
+<table class="table" *ngIf="customerInfo && customerInfo.customer">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email Id</th>
+      <th>zipcode</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let customer of customerInfo.customer">
+      <td *ngIf="customer.first_name" [textContent]="customer.first_name"></td>
+      <td *ngIf="customer.last_name" [textContent]="customer.last_name"></td>
+      <td *ngIf="customer.email" [textContent]="customer.email"></td>
+      <td *ngIf="customer.zipcode" [textContent]="customer.zipcode"></td>
+    </tr>
+  </tbody>
+</table>

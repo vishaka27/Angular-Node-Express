@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: 'view-customer-info',
@@ -8,13 +9,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ViewCustomerInfoComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
-
   public userName: string;
+  public customerInfo: any;
 
-  ngOnInit() {
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.params.subscribe(param => {
       this.userName = param.first_name;
+    });
+  }
+
+  ngOnInit() {
+    this.http.get('http://localhost:5001/api/v1/customer/name/' + this.userName).subscribe((data: any) => {
+        console.log('customer response', data);
+        this.customerInfo = data;
+        console.log('this.customerInfo', this.customerInfo.customer);
     });
   }
 }

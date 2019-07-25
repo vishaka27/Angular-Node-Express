@@ -1,5 +1,6 @@
 let validator = require('fastest-validator');
 const CustomerModel = require('../models/model.customer');
+const connectionPool = require('../demo_db_connection');
 
 let customers = {};
 let counter = 0;
@@ -40,10 +41,42 @@ class CustomerService {
         let customer = new CustomerModel('', data.first_name, data.last_name, data.email, data.zipcode, data.password);
         customer.uid = 'c' + counter++;
         customers[customer.uid] = customer;
+        const getQ = 'SELECT * FROM customer_info';
+        connectionPool.query(getQ, function(err, result) {
+            if (!err) {
+                const customers = result.length;
+                const uid = 'c' + result.length;
+                console.log('customer length', uid);
+                const query = `INSERT INTO customer_info(uid,guid,first_name,last_name,email,password,zipcode) VALUES('${uid}','fdjgkdhg','${customer.first_name}','${customer.last_name}','${customer.email}','${customer.password}','${customer.zipcode}');`
+                // INSERT INTO `customers`.`customer_info` (`id`, `uid`, `guid`, `first_name`, `last_name`, `email`, `password`, `zipcode`) VALUES ('0', 'c0', 'fdjgkdhg', 'Vishaka', 'N', 'test@yopmail.com', 'kxfj', '560078');
+
+                connectionPool.query(query, function(err, rows, fields) {
+                    console.log('error-----', err);
+                    if (!err) {
+                        console.log('Result after insertion', rows);
+                    } else {
+                        console.log('Error while querying');
+                    }
+                });
+            }
+        });
+         // const query = 'INSERT INTO customer_info(id, uid, guid, first_name, last_name, email, password, zipcode) VALUES(1, ' + customer.uid + ', ' + 'ksjdj9kjlkj' + ', ' + customer.first_name + ', ' + customer.last_name + ', ' + customer.email + ', ' + customer.password + ', ' + customer.zipcode + ')';
+        // const query = 'INSERT INTO customer_info (id, uid, guid, first_name, last_name, email, password, zipcode) VALUES (1, '  + customer.uid + ', ' + 'fdjgkdhg' + ', ' + customer.first_name + ', ' + customer.last_name + ', ' + customer.email + ', ' + customer.password + ', ' + customer.email + ')';
         return customer;
     }
 
     static retrieve(uid) {
+        // const query = `SELECT * FROM customer_info WHERE uid = ${uid}`;
+        // // INSERT INTO `customers`.`customer_info` (`id`, `uid`, `guid`, `first_name`, `last_name`, `email`, `password`, `zipcode`) VALUES ('0', 'c0', 'fdjgkdhg', 'Vishaka', 'N', 'test@yopmail.com', 'kxfj', '560078');
+
+        // connectionPool.query(query, function(err, rows, fields) {
+        //     console.log('error-----', err);
+        //     if (!err) {
+        //         console.log('Result after viewing by uid', rows);
+        //     } else {
+        //         console.log('Error while querying');
+        //     }
+        // });
         if (customers[uid] !== null) {
             return customers[uid];
         } else {
@@ -68,14 +101,27 @@ class CustomerService {
         }
     }
 
-    static getByName(first_name) {
-        for (var key in customers) {
-            if ((customers[key] !== null) && (customers[key].first_name !== null)) {
-                return customers[key];
+    static getByName(first_name, cb) {
+        const query = `SELECT * FROM customer_info c WHERE c.first_name = '${first_name}'`;
+        // INSERT INTO `customers`.`customer_info` (`id`, `uid`, `guid`, `first_name`, `last_name`, `email`, `password`, `zipcode`) VALUES ('0', 'c0', 'fdjgkdhg', 'Vishaka', 'N', 'test@yopmail.com', 'kxfj', '560078');
+
+        connectionPool.query(query, function(err, results, fields) {
+            console.log('error-----', err);
+            if (!err) {
+                cb(results);
+                console.log('Result after viewing by name', results);
             } else {
+                console.log('Error while querying');
                 throw new Error('No data found for customer' + first_name);
             }
-        }
+        });
+        // for (var key in customers) {
+        //     if ((customers[key] !== null) && (customers[key].first_name !== null)) {
+        //         return customers[key];
+        //     } else {
+        //         throw new Error('No data found for customer' + first_name);
+        //     }
+        // }
     }
 }
 
